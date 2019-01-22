@@ -6,7 +6,15 @@ import (
 )
 
 func TestLineNewLine(t *testing.T) {
-	// TODO: test this
+	t.Run("1", func(t *testing.T) {
+		l1 := NewLine(NewVector(1, 1), NewVector(3, 3))
+		if l1.slope != 1  {
+			t.Error("Failed Test")
+		}
+		if l1.yInt != 0  {
+			t.Error("Failed Test")
+		}
+	})
 }
 
 func TestLineEquals(t *testing.T) {
