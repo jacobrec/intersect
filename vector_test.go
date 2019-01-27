@@ -8,7 +8,7 @@ import (
 func TestEquals(t *testing.T) {
 	t.Run("1", func(t *testing.T) {
 		if !NewVectorMagDir(10, math.Pi).Equals(NewVectorMagDir(10, math.Pi)) {
-            t.Error("Failed Test")
+			t.Error("Failed Test")
 		}
 	})
 }
@@ -16,17 +16,17 @@ func TestEquals(t *testing.T) {
 func TestNewVectorMagDir(t *testing.T) {
 	t.Run("1", func(t *testing.T) {
 		v := NewVectorMagDir(10, math.Pi)
-        e := NewVector(-10, 0)
+		e := NewVector(-10, 0)
 		if !v.Equals(e) {
-            t.Error("Failed Test: ", v, e)
-            t.Error("inner:", floatEquals(v.X, e.X), floatEquals(v.Y, e.Y))
+			t.Error("Failed Test: ", v, e)
+			t.Error("inner:", floatEquals(v.X, e.X), floatEquals(v.Y, e.Y))
 		}
 	})
 	t.Run("2", func(t *testing.T) {
 		v := NewVectorMagDir(10, math.Pi/6)
-        e := NewVector(5*math.Sqrt(3), 5)
+		e := NewVector(5*math.Sqrt(3), 5)
 		if !v.Equals(e) {
-            t.Error("Failed Test: ", v, e)
+			t.Error("Failed Test: ", v, e)
 		}
 	})
 }
@@ -167,27 +167,27 @@ func TestLim(t *testing.T) {
 func TestRotate(t *testing.T) {
 	t.Run("1", func(t *testing.T) {
 		v := NewVectorMagDir(1, 0).Rotate(math.Pi)
-		if math.Abs(v.Angle() - math.Pi) > 1e-9 {
-            t.Error("Failed Test: ", v)
+		if math.Abs(v.Angle()-math.Pi) > 1e-9 {
+			t.Error("Failed Test: ", v)
 		}
 	})
 	t.Run("2", func(t *testing.T) {
 		v := NewVectorMagDir(1, 0).Rotate(-math.Pi)
-		if math.Abs(v.Angle() - math.Pi) > 1e-9 {
-            t.Error("Failed Test: ", v)
+		if math.Abs(v.Angle()-math.Pi) > 1e-9 {
+			t.Error("Failed Test: ", v)
 		}
 	})
 	t.Run("3", func(t *testing.T) {
 		v := NewVectorMagDir(3, 3).Rotate(1)
-		if math.Abs(v.Angle() - 4) > 1e-9 {
-            t.Error("Failed Test: ", v)
+		if math.Abs(v.Angle()-4) > 1e-9 {
+			t.Error("Failed Test: ", v)
 		}
 	})
 	t.Run("4", func(t *testing.T) {
 		v := NewVector(3, 4)
-        v2 := v.Rotate(math.Pi * 2)
+		v2 := v.Rotate(math.Pi * 2)
 		if !v.Equals(v2) {
-            t.Error("Failed Test: ", v, v2)
+			t.Error("Failed Test: ", v, v2)
 		}
 	})
 }
@@ -195,26 +195,26 @@ func TestRotate(t *testing.T) {
 func TestAngle(t *testing.T) {
 	t.Run("1", func(t *testing.T) {
 		v := NewVectorMagDir(3, 7)
-		if math.Abs(v.Angle() - math.Mod(7, 2*math.Pi)) > 1e-9 {
-            t.Error("Failed Test: ", v.Angle())
+		if math.Abs(v.Angle()-math.Mod(7, 2*math.Pi)) > 1e-9 {
+			t.Error("Failed Test: ", v.Angle())
 		}
 	})
 	t.Run("2", func(t *testing.T) {
 		v := NewVectorMagDir(3, 1)
-		if math.Abs(v.Angle() - 1) > 1e-9 {
-            t.Error("Failed Test: ", v.Angle())
+		if math.Abs(v.Angle()-1) > 1e-9 {
+			t.Error("Failed Test: ", v.Angle())
 		}
 	})
 	t.Run("3", func(t *testing.T) {
 		v := NewVectorMagDir(3, math.Pi)
-		if math.Abs(v.Angle() - math.Pi) > 1e-9 {
-            t.Error("Failed Test: ", v.Angle())
+		if math.Abs(v.Angle()-math.Pi) > 1e-9 {
+			t.Error("Failed Test: ", v.Angle())
 		}
 	})
 	t.Run("4", func(t *testing.T) {
 		v := NewVectorMagDir(3, 3*math.Pi/4)
-		if math.Abs(v.Angle() - 3*math.Pi/4) > 1e-9 {
-            t.Error("Failed Test: ", v.Angle())
+		if math.Abs(v.Angle()-3*math.Pi/4) > 1e-9 {
+			t.Error("Failed Test: ", v.Angle())
 		}
 	})
 }
@@ -234,3 +234,21 @@ func TestScale(t *testing.T) {
 	})
 }
 
+func TestCollinear(t *testing.T) {
+	t.Run("1", func(t *testing.T) {
+		v1 := NewVector(1, 1)
+		v2 := NewVector(2, 2)
+		v3 := NewVector(3, 3)
+		if !Collinear(v1, v2, v3) {
+			t.Error("Failed Test")
+		}
+	})
+	t.Run("2", func(t *testing.T) {
+		v1 := NewVector(1, 1)
+		v2 := NewVector(2, 2)
+		v3 := NewVector(2, 4)
+		if Collinear(v1, v2, v3) {
+			t.Error("Failed Test")
+		}
+	})
+}
