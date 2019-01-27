@@ -31,15 +31,38 @@ func within(p, q, r float64) bool {
 
 // Intersect returns the intersection between two line segments, and a boolean if it collides
 func (s1 Segment) Intersect(s2 Segment) (Vector, bool) {
+	l1 := s1.ToLine()
+	l2 := s2.ToLine()
+	p, didLinesIntersect := l1.Intersect(l2)
+	if didLinesIntersect {
+		if s1.IsPointOn(p) && s2.IsPointOn(p) {
+			return p, true
+		}
+	}
 	return Vector{}, false
 }
 
 // IntersectRay returns the intersection with a ray, and a boolean if it collides
 func (s1 Segment) IntersectRay(r2 Ray) (Vector, bool) {
+	l1 := s1.ToLine()
+	l2 := r2.ToLine()
+	p, didLinesIntersect := l1.Intersect(l2)
+	if didLinesIntersect {
+		if s1.IsPointOn(p) && r2.IsPointOn(p) {
+			return p, true
+		}
+	}
 	return Vector{}, false
 }
 
 // IntersectLine returns the intersection with a line, and a boolean if it collides
 func (s1 Segment) IntersectLine(l2 Line) (Vector, bool) {
+	l1 := s1.ToLine()
+	p, didLinesIntersect := l1.Intersect(l2)
+	if didLinesIntersect {
+		if s1.IsPointOn(p) {
+			return p, true
+		}
+	}
 	return Vector{}, false
 }

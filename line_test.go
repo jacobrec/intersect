@@ -182,11 +182,12 @@ func TestLineEvalY(t *testing.T) {
 	})
 }
 
-func TestLineIntersection(t *testing.T) {
+func TestLineIntersect(t *testing.T) {
 	t.Run("1", func(t *testing.T) {
 		l1 := NewLine(NewVector(0, 2), NewVector(4, 2))
 		l2 := NewLine(NewVector(2, 0), NewVector(2, 4))
-		if !l1.Intersect(l2).Equals(NewVector(2, 2)) {
+		p, _ := l1.Intersect(l2)
+		if !p.Equals(NewVector(2, 2)) {
 			t.Error("Failed Test")
 		}
 	})
@@ -194,7 +195,8 @@ func TestLineIntersection(t *testing.T) {
 	t.Run("2", func(t *testing.T) {
 		l1 := NewLine(NewVector(1, 1), NewVector(2, 2))
 		l2 := NewLine(NewVector(3, 2), NewVector(3, 2))
-		if !l1.Intersect(l2).Equals(NewVector(3, 3)) {
+		p, _ := l1.Intersect(l2)
+		if !p.Equals(NewVector(3, 3)) {
 			t.Error("Failed Test", l1, l2)
 		}
 	})

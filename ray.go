@@ -44,8 +44,8 @@ func (r1 Ray) IsSameOrigin(r2 Ray) bool {
 func (r1 Ray) IntersectRay(r2 Ray) (Vector, bool) {
 	l1 := r1.ToLine()
 	l2 := r2.ToLine()
-	if l1.IsIntersect(l2) {
-		p := l1.Intersect(l2)
+	p, didLineIntersect := l1.Intersect(l2)
+	if didLineIntersect {
 		if r1.IsPointOn(p) && r2.IsPointOn(p) {
 			return p, true
 		}
@@ -56,8 +56,8 @@ func (r1 Ray) IntersectRay(r2 Ray) (Vector, bool) {
 // IntersectLine returns the point where the ray and line intersect, if they dont intersect, the result is undefined, and the bool is false
 func (r1 Ray) IntersectLine(l1 Line) (Vector, bool) {
 	l2 := r1.ToLine()
-	if l1.IsIntersect(l2) {
-		p := l1.Intersect(l2)
+	p, didLineIntersect := l1.Intersect(l2)
+	if didLineIntersect {
 		if r1.IsPointOn(p) {
 			return p, true
 		}

@@ -68,13 +68,13 @@ func (l1 Line) EvalY(x float64) float64 {
 }
 
 // Intersect returns the point the lines intersect, result is undefined if there is no intersection
-func (l1 Line) Intersect(l2 Line) Vector {
+func (l1 Line) Intersect(l2 Line) (Vector, bool) {
 	if l1.IsVertical() != l2.IsVertical() {
 		if l1.IsVertical() {
-			return Vector{l1.xVal, l2.EvalY(l1.xVal)}
+			return Vector{l1.xVal, l2.EvalY(l1.xVal)}, true
 		}
-		return Vector{l2.xVal, l1.EvalY(l2.xVal)}
+		return Vector{l2.xVal, l1.EvalY(l2.xVal)}, true
 	}
 	x := (l2.yInt - l1.yInt) / (l1.slope - l2.slope)
-	return Vector{x, l1.EvalY(x)}
+	return Vector{x, l1.EvalY(x)}, !l1.IsParallel(l2)
 }
