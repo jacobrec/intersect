@@ -128,21 +128,24 @@ func TestRayIsIntersectRay(t *testing.T) {
 	t.Run("1", func(t *testing.T) {
 		r1 := NewRay(NewVector(1, 1), NewVector(2, 2))
 		r2 := NewRay(NewVector(1, 1), NewVector(2, 2))
-		if r1.IsIntersectRay(r2) {
+		_, didCol := r1.IntersectRay(r2)
+		if didCol {
 			t.Error("Failed Test", r1)
 		}
 	})
 	t.Run("2", func(t *testing.T) {
 		r1 := NewRay(NewVector(1, 1), NewVector(2, 2))
 		r2 := NewRay(NewVector(0, 0), NewVector(0, 2))
-		if r1.IsIntersectRay(r2) {
+		_, didCol := r1.IntersectRay(r2)
+		if didCol {
 			t.Error("Failed Test", r1)
 		}
 	})
 	t.Run("3", func(t *testing.T) {
 		r1 := NewRay(NewVector(1, 1), NewVector(2, 2))
 		r2 := NewRay(NewVector(5, 0), NewVector(5, 2))
-		if !r1.IsIntersectRay(r2) {
+		_, didCol := r1.IntersectRay(r2)
+		if !didCol {
 			t.Error("Failed Test", r1)
 		}
 	})
@@ -152,55 +155,62 @@ func TestRayIsIntersectLine(t *testing.T) {
 	t.Run("1", func(t *testing.T) {
 		r1 := NewRay(NewVector(1, 1), NewVector(2, 2))
 		l1 := NewLine(NewVector(1, 1), NewVector(2, 2))
-		if r1.IsIntersectLine(l1) {
+		_, didCol := r1.IntersectLine(l1)
+		if didCol {
 			t.Error("Failed Test", r1)
 		}
 	})
 	t.Run("2", func(t *testing.T) {
 		r1 := NewRay(NewVector(1, 1), NewVector(1, 2))
 		l1 := NewLine(NewVector(1, 0), NewVector(2, 0))
-		if r1.IsIntersectLine(l1) {
+		_, didCol := r1.IntersectLine(l1)
+		if didCol {
 			t.Error("Failed Test", r1)
 		}
 	})
 	t.Run("3", func(t *testing.T) {
 		r1 := NewRay(NewVector(0, -1), NewVector(2, 2))
 		l1 := NewLine(NewVector(1, 1), NewVector(2, 2))
-		if !r1.IsIntersectLine(l1) {
+		_, didCol := r1.IntersectLine(l1)
+		if !didCol {
 			t.Error("Failed Test", r1)
 		}
 	})
 }
 
-func TestRayIntersectionLine(t *testing.T){
+func TestRayIntersectLine(t *testing.T) {
 	t.Run("1", func(t *testing.T) {
 		r1 := NewRay(NewVector(0, 0), NewVector(2, 2))
 		l1 := NewLine(NewVector(0, 5), NewVector(1, 5))
-		if !r1.IntersectionLine(l1).Equals(NewVector(5, 5)) {
+		p, _ := r1.IntersectLine(l1)
+		if !p.Equals(NewVector(5, 5)) {
 			t.Error("Failed Test", r1)
 		}
 	})
 	t.Run("2", func(t *testing.T) {
 		r1 := NewRay(NewVector(2, 1), NewVector(2, 2))
 		l1 := NewLine(NewVector(0, 5), NewVector(1, 5))
-		if !r1.IntersectionLine(l1).Equals(NewVector(2, 5)) {
+		p, _ := r1.IntersectLine(l1)
+		if !p.Equals(NewVector(2, 5)) {
 			t.Error("Failed Test", r1)
 		}
 	})
 }
 
-func TestRayIntersectionRay(t *testing.T){
+func TestRayIntersectRay(t *testing.T) {
 	t.Run("1", func(t *testing.T) {
 		r1 := NewRay(NewVector(0, 0), NewVector(4, -2))
 		r2 := NewRay(NewVector(0, -9), NewVector(9, 0))
-		if !r1.IntersectionRay(r2).Equals(NewVector(6, -3)) {
-			t.Error("Failed Test", r1, r2, r1.IntersectionRay(r2))
+		p, _ := r1.IntersectRay(r2)
+		if !p.Equals(NewVector(6, -3)) {
+			t.Error("Failed Test", r1, r2, p)
 		}
 	})
 	t.Run("2", func(t *testing.T) {
 		r1 := NewRay(NewVector(1, 1), NewVector(2, 2))
 		r2 := NewRay(NewVector(0, 5), NewVector(2, 6))
-		if !r1.IntersectionRay(r2).Equals(NewVector(10, 10)) {
+		p, _ := r1.IntersectRay(r2)
+		if !p.Equals(NewVector(10, 10)) {
 			t.Error("Failed Test", r1)
 		}
 	})
