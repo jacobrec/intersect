@@ -78,3 +78,13 @@ func (l1 Line) Intersect(l2 Line) (Vector, bool) {
 	x := (l2.yInt - l1.yInt) / (l1.slope - l2.slope)
 	return Vector{x, l1.EvalY(x)}, !l1.IsParallel(l2)
 }
+
+// IntersectRay returns the point the lines intersect, the second value is a boolean indicating if they intersect
+func (l1 Line) IntersectRay(r2 Ray) (Vector, bool) {
+	return r2.IntersectLine(l1)
+}
+
+// IntersectSegment returns the point the lines intersect, the second value is a boolean indicating if they intersect
+func (l1 Line) IntersectSegment(s2 Segment) (Vector, bool) {
+	return s2.IntersectLine(l1)
+}

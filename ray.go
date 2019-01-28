@@ -64,3 +64,8 @@ func (r1 Ray) IntersectLine(l1 Line) (Vector, bool) {
 	}
 	return Vector{math.NaN(), math.NaN()}, false
 }
+
+// IntersectSegment returns the point the segment and ray intersect, and a boolean which determines if they intersect
+func (r1 Ray) IntersectSegment(s2 Segment) (Vector, bool) {
+	return s2.IntersectRay(r1)
+}
