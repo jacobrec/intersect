@@ -9,6 +9,11 @@ type Line struct {
 	xVal  float64 // only used if slope is inf
 }
 
+// ToLine returns the line, it is only used to fill the edge interface
+func (l1 Line) ToLine() Line {
+	return l1
+}
+
 // NewLine creates a new line passing through p1 and p2, if p1 == p2, then a vertical line will be created
 func NewLine(p1, p2 Vector) Line {
 	xVal := p1.X
@@ -67,24 +72,7 @@ func (l1 Line) EvalY(x float64) float64 {
 	return l1.yInt + l1.slope*x
 }
 
-// Intersect returns the point the lines intersect, result is undefined if there is no intersection
-func (l1 Line) Intersect(l2 Line) (Vector, bool) {
-	if l1.IsVertical() != l2.IsVertical() {
-		if l1.IsVertical() {
-			return Vector{l1.xVal, l2.EvalY(l1.xVal)}, true
-		}
-		return Vector{l2.xVal, l1.EvalY(l2.xVal)}, true
-	}
-	x := (l2.yInt - l1.yInt) / (l1.slope - l2.slope)
-	return Vector{x, l1.EvalY(x)}, !l1.IsParallel(l2)
-}
-
-// IntersectRay returns the point the lines intersect, the second value is a boolean indicating if they intersect
-func (l1 Line) IntersectRay(r2 Ray) (Vector, bool) {
-	return r2.IntersectLine(l1)
-}
-
-// IntersectSegment returns the point the lines intersect, the second value is a boolean indicating if they intersect
-func (l1 Line) IntersectSegment(s2 Segment) (Vector, bool) {
-	return s2.IntersectLine(l1)
+// Intersect returns the point the line and edge intersect, and a boolean which determines if they intersect
+func (l1 Line) Intersect(e2 Edge) (Vector, bool) {
+	return Intersect(l1, e2)
 }

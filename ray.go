@@ -40,32 +40,7 @@ func (r1 Ray) IsSameOrigin(r2 Ray) bool {
 	return r1.point.Equals(r2.point)
 }
 
-// IntersectRay returns the point where the two rays intersect, if they dont intersect, the result is undefined, and the bool is false
-func (r1 Ray) IntersectRay(r2 Ray) (Vector, bool) {
-	l1 := r1.ToLine()
-	l2 := r2.ToLine()
-	p, didLineIntersect := l1.Intersect(l2)
-	if didLineIntersect {
-		if r1.IsPointOn(p) && r2.IsPointOn(p) {
-			return p, true
-		}
-	}
-	return Vector{math.NaN(), math.NaN()}, false
-}
-
-// IntersectLine returns the point where the ray and line intersect, if they dont intersect, the result is undefined, and the bool is false
-func (r1 Ray) IntersectLine(l1 Line) (Vector, bool) {
-	l2 := r1.ToLine()
-	p, didLineIntersect := l1.Intersect(l2)
-	if didLineIntersect {
-		if r1.IsPointOn(p) {
-			return p, true
-		}
-	}
-	return Vector{math.NaN(), math.NaN()}, false
-}
-
-// IntersectSegment returns the point the segment and ray intersect, and a boolean which determines if they intersect
-func (r1 Ray) IntersectSegment(s2 Segment) (Vector, bool) {
-	return s2.IntersectRay(r1)
+// Intersect returns the point the ray and edge intersect, and a boolean which determines if they intersect
+func (r1 Ray) Intersect(e2 Edge) (Vector, bool) {
+	return Intersect(r1, e2)
 }

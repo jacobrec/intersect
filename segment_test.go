@@ -75,7 +75,7 @@ func TestSegIntersectRay(t *testing.T) {
 	t.Run("1", func(t *testing.T) {
 		s1 := NewSegment(NewVector(0, 0), NewVector(2, 2))
 		s2 := NewRay(NewVector(1, 0), NewVector(1, 2))
-		p, b := s1.IntersectRay(s2)
+		p, b := s1.Intersect(s2)
 		if !b && !p.Equals(NewVector(1, 1)) {
 			t.Error("Failed Test", s1, s2, p, b)
 		}
@@ -83,7 +83,7 @@ func TestSegIntersectRay(t *testing.T) {
 	t.Run("2", func(t *testing.T) {
 		s1 := NewSegment(NewVector(0, 0), NewVector(3, 3))
 		s2 := NewRay(NewVector(3, 0), NewVector(3, 2))
-		p, b := s1.IntersectRay(s2)
+		p, b := s1.Intersect(s2)
 		if !b && !p.Equals(NewVector(3, 3)) {
 			t.Error("Failed Test", s1, s2, p, b)
 		}
@@ -91,7 +91,7 @@ func TestSegIntersectRay(t *testing.T) {
 	t.Run("3", func(t *testing.T) {
 		s1 := NewSegment(NewVector(0, 0), NewVector(2, 2))
 		s2 := NewRay(NewVector(-1, 0), NewVector(-1, 2))
-		p, b := s1.IntersectRay(s2)
+		p, b := s1.Intersect(s2)
 		if b {
 			t.Error("Failed Test", s1, s2, p, b)
 		}
@@ -99,7 +99,7 @@ func TestSegIntersectRay(t *testing.T) {
 	t.Run("4", func(t *testing.T) {
 		s1 := NewSegment(NewVector(0, 0), NewVector(2, 2))
 		s2 := NewRay(NewVector(1, 0), NewVector(3, 2))
-		p, b := s1.IntersectRay(s2)
+		p, b := s1.Intersect(s2)
 		if b {
 			t.Error("Failed Test", s1, s2, p, b)
 		}
@@ -110,7 +110,7 @@ func TestSegIntersectLine(t *testing.T) {
 	t.Run("1", func(t *testing.T) {
 		s1 := NewSegment(NewVector(0, 0), NewVector(2, 2))
 		s2 := NewLine(NewVector(1, 0), NewVector(1, 2))
-		p, b := s1.IntersectLine(s2)
+		p, b := s1.Intersect(s2)
 		if !b && !p.Equals(NewVector(1, 1)) {
 			t.Error("Failed Test", s1, s2, p, b)
 		}
@@ -118,7 +118,7 @@ func TestSegIntersectLine(t *testing.T) {
 	t.Run("2", func(t *testing.T) {
 		s1 := NewSegment(NewVector(0, 0), NewVector(3, 3))
 		s2 := NewLine(NewVector(3, 0), NewVector(3, 2))
-		p, b := s1.IntersectLine(s2)
+		p, b := s1.Intersect(s2)
 		if !b && !p.Equals(NewVector(3, 3)) {
 			t.Error("Failed Test", s1, s2, p, b)
 		}
@@ -126,7 +126,7 @@ func TestSegIntersectLine(t *testing.T) {
 	t.Run("3", func(t *testing.T) {
 		s1 := NewSegment(NewVector(-1, -1), NewVector(2, 2))
 		s2 := NewLine(NewVector(-1, 0), NewVector(-1, 2))
-		p, b := s1.IntersectLine(s2)
+		p, b := s1.Intersect(s2)
 		if !b && !p.Equals(NewVector(-1, -1)) {
 			t.Error("Failed Test", s1, s2, p, b)
 		}
@@ -134,7 +134,7 @@ func TestSegIntersectLine(t *testing.T) {
 	t.Run("4", func(t *testing.T) {
 		s1 := NewSegment(NewVector(0, 0), NewVector(2, 2))
 		s2 := NewLine(NewVector(1, 0), NewVector(3, 2))
-		p, b := s1.IntersectLine(s2)
+		p, b := s1.Intersect(s2)
 		if b {
 			t.Error("Failed Test", s1, s2, p, b)
 		}

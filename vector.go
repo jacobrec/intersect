@@ -2,6 +2,7 @@ package intersect
 
 import "math"
 
+// Vector defines a struct for a 2d vector, or a point
 type Vector struct {
 	X float64
 	Y float64
