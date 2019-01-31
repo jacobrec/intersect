@@ -1,7 +1,5 @@
 package intersect
 
-import "math"
-
 // Rectangle is a simple geometry struct
 type Rectangle struct {
 	X      float64
@@ -23,6 +21,10 @@ func (r1 Rectangle) IsPointIn(p2 Vector) bool {
 // Equals returns true if all the parameters are close enough to the other rectangle
 func (r1 Rectangle) Equals(r2 Rectangle) bool {
 	return floatEquals(r1.X, r2.X) && floatEquals(r1.Y, r2.Y) && floatEquals(r1.Width, r2.Width) && floatEquals(r1.Height, r2.Height)
+}
+
+func (r1 Rectangle) getCorner() Vector {
+	return Vector{r1.X, r1.Y}
 }
 
 // This function assumes x1 < x2
@@ -75,7 +77,18 @@ func (r1 Rectangle) Intersect(r2 Rectangle) (Rectangle, bool) {
 	return r, r.Width > 0 && r.Height > 0
 }
 
-// IntersectEdge calculates where a straight edge intersects with the rectangle. It returns 0, 1, or 2 points in an array, as well as a number indicating how many collisions occured
-func (r1 Rectangle) IntersectEdge(e2 Edge) ([2]Vector, int) {
-	return [2]Vector{NewVector(math.NaN(), math.NaN()), NewVector(math.NaN(), math.NaN())}, 0
+// ToPoly returns a polygon that is this rectangle
+func (r1 Rectangle) ToPoly() Polygon {
+	ss := [4]Segment{
+		NewSegment(r1.getCorner(), r1.getCorner().Add(NewVector(r1.Width, 0))),
+		NewSegment(r1.getCorner().Add(NewVector(r1.Width, 0)), r1.getCorner().Add(NewVector(r1.Width, r1.Height))),
+		NewSegment(r1.getCorner().Add(NewVector(r1.Width, r1.Height)), r1.getCorner().Add(NewVector(0, r1.Height))),
+		NewSegment(r1.getCorner().Add(NewVector(0, r1.Height)), r1.getCorner()),
+	}
+	return NewPolyFromSegments(ss[:])
+}
+
+// IntersectEdge calculates the intersection with a straight edge
+func (r1 Rectangle) IntersectEdge(e2 Edge) ([]Vector, int) {
+	return r1.ToPoly().IntersectEdge(e2)
 }

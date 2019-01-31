@@ -11,6 +11,12 @@ func TestEquals(t *testing.T) {
 			t.Error("Failed Test")
 		}
 	})
+	t.Run("2", func(t *testing.T) {
+		nz := math.Copysign(0, -1)
+		if !NewVector(0, 0).Equals(NewVector(nz, nz)) {
+			t.Error("Failed Test")
+		}
+	})
 }
 
 func TestNewVectorMagDir(t *testing.T) {

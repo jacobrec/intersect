@@ -97,10 +97,27 @@ func TestRectersect(t *testing.T) {
 func TestRectIntersectEdge(t *testing.T) {
 	t.Run("1", func(t *testing.T) {
 		r1 := NewRect(0, 0, 1, 1)
-		e1 := NewLine(NewVector(0, 0), NewVector(1, 1))
+		e1 := NewLine(NewVector(0.2, 0.2), NewVector(1, 1))
 		ps, c := r1.IntersectEdge(e1)
-		if c != 0 {
+		if c != 2 {
 			t.Error("Test failed", ps, c)
 		}
+		if !(ps[0].Equals(NewVector(0, 0)) && ps[1].Equals(NewVector(1, 1)) ||
+			ps[0].Equals(NewVector(1, 1)) && ps[1].Equals(NewVector(0, 0))) {
+			t.Error("Test failed", ps, ps[0].Equals(NewVector(0, 0)))
+		}
 	})
+
+	t.Run("2", func(t *testing.T) {
+		r1 := NewRect(0, 0, 1, 1)
+		e1 := NewSegment(NewVector(0.5, 0.5), NewVector(1, 1))
+		ps, c := r1.IntersectEdge(e1)
+		if c != 1 {
+			t.Error("Test failed", ps, c)
+		}
+		if !ps[0].Equals(NewVector(1, 1)) {
+			t.Error("Test failed", ps)
+		}
+	})
+
 }
